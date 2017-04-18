@@ -1,76 +1,110 @@
+
+/**
+ * Created by wangjing on 3/4/2017.
+ */
+
 var webpack = require('webpack');
 var path = require('path');
-var OpenBrowserPlugin = require('open-browser-webpack-plugin');
-var autoprefixer = require('autoprefixer-loader');
+//#resolve可以把相对路径转换成绝对路径
+var ROOT_PATH = path.resolve(__dirname);
+var APP_PATH = path.resolve(__dirname, './app/main.jsx');
+var BUILD_PATH = path.resolve(__dirname, './build');
+
+//输出HTML和CSS等等文件到路径的插件
 var CopyWebpackPlugin = require('copy-webpack-plugin');
-/*
-* 测试环境配置（此处保留之前对SCSS文件模块的处理）
-* 使用autoprefixer自动添加CSS前缀
-* 使用url-loader加载静态资源模块
-* 使用babel-loader进行ES6代码转义
-* 使用open-browser-webpack-plugin插件自动打开默认浏览器查看结果
-* 使用webpack-dev-server进行代码热替换
-* 运行端口：8080
-*/
+
 module.exports = {
+    //配置热替换服务器,每次改变JS文件都会自动AJAX刷新浏览器
     devServer: {
         historyApiFallback: true,
         hot: true,
         inline: true,
-        progress: true,
         contentBase: './app',
-        port: 8080
+        port: 9121
     },
+
+    //入口文件,需要处理的文件路径
     entry: [
-        // 'webpack/hot/dev-server',
-        // 'webpack-dev-server/client?http://localhost:8080',
-        path.resolve(__dirname, 'app/main.jsx')
+        // './components/index.js',
+        APP_PATH,
+       // 'webpack/hot/dev-server',
+       // 'webpack-dev-server/client?http://localhost:9121',
+        //上面2个是开发的时候用的热替换服务器
     ],
+    //输出文件位置
     output: {
-        path: __dirname + '/build',
+        //绝对路径,用于输出到位置
+        path: BUILD_PATH,
+        //服务路径,用于热替换服务器
         publicPath: '/',
-        filename: './bundle.js'
+        //输出文件名
+        filename: 'bundle.js'
     },
+    //模块
     module: {
-        loaders: [{
-            test: /\.(png|jpg)$/,
-            include: path.resolve(__dirname, 'app'),
-            loader: 'url-loader'
-        }, {
-            test: /\.css$/,
-            include: path.resolve(__dirname, 'app'),
-            loader: 'style-loader!css-loader!autoprefixer-loader'
-        }, {
-            test: /\.scss$/,
-            include: path.resolve(__dirname, 'app'),
-            loader: 'style-loader!css-loader!autoprefixer-loader!sass-loader'
-        }, {
-            test: /\.less$/,
-            include: path.resolve(__dirname, 'app'),
-            loader: 'style-loader!css-loader!autoprefixer-loader!less-loader'
-        },{
-            test: /\.js[x]?$/,
-            include: path.resolve(__dirname, 'app'),
-            exclude: /node_modules/,
-            loader: 'babel-loader'
-        }, ],
-        // postcss:[autoprefixer({browsers:['last 2 versions']})]
+        //webpack的核心,所有的文件通过loader来处理编译
+        loaders: [
+            //js
+            {
+                //首先匹配文件后缀
+                test: /\.js[x]?$/,
+                //然后指定作用范围,这里可不写,但是范围越小速度越快
+                include: path.resolve(__dirname, 'app'),
+                //排除目录,exclude后将不匹配
+                exclude: /node_modules/,
+                //加载的loader,上面匹配到的文件都通过下面的loader来处理编译,这里是babel-es6+react
+                loader: 'babel-loader?presets[]=react,presets[]=es2015'
+            },
+            {
+                test: /\.sass/,
+                loader: 'style-loader!css-loader!sass-loader?outputStyle=expanded&indentedSyntax'
+            },
+            //.css 文件使用 style-loader 和 css-loader 来处理
+            {
+                test: /\.scss/,
+                loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 versions!sass-loader?outputStyle=expanded'
+            },
+            {
+                test: /\.css$/,
+                loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 versions'
+            },
+            {
+                test: /\.less/,
+                loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 versions!less-loader'
+            },
+            //图片文件使用url-loader 处理 '?limit=8192'表示将所有小于8kb的图片都转为base64形式
+            {
+                test: /\.(png|jpg|gif|woff|woff2|eot|ttf)$/,
+                loader: 'url-loader?limit=100000&name=images/[hash:8].[name].[ext]'
+            },
+            // {
+            //     test: /\.jpg$/, loader: "file-loader?name=img/[hash:8].[name].[ext]"
+            // },
+            {
+                test: /\.svg$/, loader: 'svg-url-loader'
+            }, {
+                test: /\.json$/,
+                loader: 'json-loader'
+            },
+        ],
     },
     resolve: {
-        extensions: [' ', '.js', '.jsx'],
+        extensions: [' ','.js','.jsx','.json']
     },
+    //插件
     plugins: [
+        //热替换插件
         new webpack.HotModuleReplacementPlugin(),
+        //输出文件插件,最顶上有引入
         new CopyWebpackPlugin([
             { from: './app/index.html', to: 'index.html' },
-        ])
-        // new OpenBrowserPlugin({
-        //     url: 'http://localhost:8080'
-        // }),
-        // new webpack.DefinePlugin({
-        //     'process.env': {
-        //         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-        //     },
-        // }),
+        ]),
+        //以下代码为压缩代码插件,在打包的时候用,开发环境下会减慢编译速度
+        //new webpack.optimize.UglifyJsPlugin({
+        //    这里是去除错误提示的配置,具体看webpack文档
+        //    compress: {
+        //        warnings: false
+        //    }
+        //}),
     ]
 };
