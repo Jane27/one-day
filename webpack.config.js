@@ -14,6 +14,7 @@ var BUILD_PATH = path.resolve(__dirname, './build');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+    devtool: 'eval-source-map',
     //配置热替换服务器,每次改变JS文件都会自动AJAX刷新浏览器
     devServer: {
         historyApiFallback: true,
@@ -53,7 +54,14 @@ module.exports = {
                 //排除目录,exclude后将不匹配
                 exclude: /node_modules/,
                 //加载的loader,上面匹配到的文件都通过下面的loader来处理编译,这里是babel-es6+react
-                loader: 'babel-loader?presets[]=react,presets[]=es2015'
+                loader: 'babel-loader',
+                query:{
+                    presets:['es2015','react'],
+                    plugins: ['transform-runtime', ['import', {
+                        libraryName: 'antd',
+                        style: 'css' // or true or css 这里必须是 css，否则样式不能加载
+                    }]]
+                }
             },
             {
                 test: /\.sass/,
@@ -85,8 +93,8 @@ module.exports = {
             }, {
                 test: /\.json$/,
                 loader: 'json-loader'
-            },
-        ],
+            }
+        ]
     },
     resolve: {
         extensions: [' ','.js','.jsx','.json']
@@ -97,8 +105,8 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
         //输出文件插件,最顶上有引入
         new CopyWebpackPlugin([
-            { from: './app/index.html', to: 'index.html' },
-        ]),
+            { from: './app/index.html', to: 'index.html' }
+        ])
         //以下代码为压缩代码插件,在打包的时候用,开发环境下会减慢编译速度
         //new webpack.optimize.UglifyJsPlugin({
         //    这里是去除错误提示的配置,具体看webpack文档

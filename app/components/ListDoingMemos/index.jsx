@@ -39,7 +39,7 @@ class ListDoingMemos extends Component {
             width: "100%",
             maxWidth: "800px",
             margin:"0 auto",
-        }
+        };
         const Panel = Collapse.Panel;
         return (
             <main>
