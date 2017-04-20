@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import ListTodoMemos from '../components/ListTodoMemos';
 import ListDoingMemos from '../components/ListDoingMemos';
@@ -13,7 +14,7 @@ import {
 /*
  * @class AllMemosRoute `全部事项`组件
  */
-class AllMemosRoute extends Component {
+class AllMemosRoute extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -33,6 +34,7 @@ class AllMemosRoute extends Component {
                 <ListDoneMemos
                     todolist={todolist}
                     onDel={index=>dispatch(deleteTodo(index))} onDoneToDoing={index=>dispatch(changeDoneToDoing(index))}/>
+                {/*{this.props.children}*/}
             </div>
         );
     }

@@ -1,10 +1,11 @@
-import React, {Component,PropTypes} from 'react';
+import React  from 'react';
+import PropTypes from 'prop-types';
 import {findDOMNode} from 'react-dom';
 import { Collapse,Row,Col,Icon,Button } from 'antd';
 /*
  * @class ListTodoMemos `新建事项`组件
  */
-class ListTodoMemos extends Component {
+class ListTodoMemos extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -35,7 +36,7 @@ class ListTodoMemos extends Component {
             width: "100%",
             maxWidth: "800px",
             margin:"0 auto",
-        }
+        };
         const Panel = Collapse.Panel;
         return (
             <main>

@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Navigation from '../components/Navigation';
 import ListDoingMemos from '../components/ListDoingMemos';
@@ -10,7 +11,7 @@ import {
 /*
  * @class DoingRoute `正在进行`组件
  */
-class DoingRoute extends Component {
+class DoingRoute extends React.Component {
     constructor(props) {
         super(props);
     }

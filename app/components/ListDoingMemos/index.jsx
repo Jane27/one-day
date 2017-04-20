@@ -1,9 +1,10 @@
-import React, {Component,PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Collapse,Row,Col ,Icon,Button} from 'antd';
 /*
  * @class ListDoingMemos `正在进行`组件
  */
-class ListDoingMemos extends Component {
+class ListDoingMemos extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -66,10 +67,14 @@ class ListDoingMemos extends Component {
                                         <li key={i} style={{opacity:item.doing?"1":''}}>
                                             <Row>
                                                 <Col span={3}>
-                                                    <input type="checkbox" checked={item.doing} onChange={this.handleToTodo.bind(this)} data-key={i}/>
+                                                    <input type="checkbox"
+                                                           checked={item.doing}
+                                                           onChange={this.handleToTodo.bind(this)}
+                                                           data-key={i}/>
                                                 </Col>
                                                 <Col span={20}>
-                                                    <p data-key={i} onClick={this.handleToDone.bind(this)}>{item.todo}</p>
+                                                    <p data-key={i}
+                                                       onClick={this.handleToDone.bind(this)}>{item.todo}</p>
                                                 </Col>
                                                 <Col span={1}>
                                                     <Icon type="close-circle"  data-key={i}
@@ -95,5 +100,5 @@ ListDoingMemos.propTypes={
     onDoingToDone: PropTypes.func.isRequired,
     onDoingToTodo: PropTypes.func.isRequired,
     onDel:PropTypes.func.isRequired
-}
+};
 export default ListDoingMemos;

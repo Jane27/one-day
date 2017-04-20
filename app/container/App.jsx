@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Header from '../components/Header';
 import Navigation from '../components/Navigation';
@@ -8,7 +9,7 @@ import './App.less';
 /*
  * @class App `APP`组件
  */
-class App extends Component {
+class App extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -29,14 +30,25 @@ class App extends Component {
         });
         return (
             <div>
-                <Header todolist={todolist} onAdd ={text => dispatch(addTodo(text))} onSearch={text => dispatch(search(text))} onKeyUp={this.props.onKeyUp}/>
-                <Navigation allMemos={allMemos} todoNumber={todoNumber} doingNumber={doingNumber} doneNumber={doneNumber}/> {this.props.children}
+                <Header todolist={todolist}
+                        onAdd ={text => dispatch(addTodo(text))}
+                        onSearch={text => dispatch(search(text))}
+                        onKeyUp={this.props.onKeyUp}/>
+
+                <Navigation allMemos={allMemos}
+                            todoNumber={todoNumber}
+                            doingNumber={doingNumber}
+                            doneNumber={doneNumber}/>
+                {this.props.children}
             </div>
         );
     }
 }
 App.propTypes = {
-    todolist: PropTypes.arrayOf(PropTypes.shape({todo: PropTypes.string.isRequired, istodo: PropTypes.bool.isRequired, doing: PropTypes.bool.isRequired, done: PropTypes.bool.isRequired}).isRequired).isRequired
+    todolist: PropTypes.arrayOf(PropTypes.shape({todo: PropTypes.string.isRequired,
+                                                 istodo: PropTypes.bool.isRequired,
+                                                 doing: PropTypes.bool.isRequired,
+                                                 done: PropTypes.bool.isRequired}).isRequired).isRequired
 };
 function mapStateToProps(state) {
     return {todolist: state.todolist};

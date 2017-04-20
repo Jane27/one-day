@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Navigation from '../components/Navigation';
 import ListTodoMemos from '../components/ListTodoMemos';
@@ -9,7 +10,7 @@ import {
 /*
  * @class TodoRoute `新建事项`组件
  */
-class TodoRoute extends Component {
+class TodoRoute extends React.Component {
     constructor(props) {
         super(props);
     }

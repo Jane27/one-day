@@ -1,9 +1,10 @@
-import React, {Component,PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Collapse,Row,Col,Icon,Button} from 'antd';
 /*
  * @class ListDoneMemos `已完成`组件
  */
-class ListDoneMemos extends Component {
+class ListDoneMemos extends React.Component {
     constructor(props) {
         super(props);
     }

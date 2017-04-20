@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Navigation from '../components/Navigation';
 import ListDoneMemos from '../components/ListDoneMemos';
@@ -9,7 +10,7 @@ import {
 /*
  * @class DoneRoute `已完成`组件
  */
-class DoneRoute extends Component {
+class DoneRoute extends React.Component {
     constructor(props) {
         super(props);
     }

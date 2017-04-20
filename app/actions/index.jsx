@@ -1,6 +1,6 @@
-'use strict';
+
 /*
- * @author Damonare 2016-12-10
+ * @author wangjing 2017-04-16
  * @version 1.0.0
  * action 类型
  */

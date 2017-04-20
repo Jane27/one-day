@@ -1,10 +1,11 @@
-import React, {Component, PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {findDOMNode} from 'react-dom';
 import {Button, Input} from 'antd';
 /*
  * @class Header `头`组件
  */
-class Header extends Component {
+class Header extends React.Component {
     constructor(props) {
         super(props);
         /*
@@ -41,7 +42,7 @@ class Header extends Component {
         const inputNode = findDOMNode(this.refs.inputnew);
         const text = inputNode.value.trim();
         if (text.length > 20) {
-            this.setState({hidden: false})
+            this.setState({hidden: false});
             this.setState({hint: 'No more than 20 characters'})
         } else if (text != "") {
             this.props.onAdd(text);
@@ -87,5 +88,5 @@ class Header extends Component {
 Header.propTypes = {
     onAdd: PropTypes.func.isRequired,
     onSearch: PropTypes.func.isRequired
-}
+};
 export default Header;
