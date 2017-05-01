@@ -2,6 +2,8 @@ import React  from 'react';
 import {IndexLink} from 'react-router';
 import NavLink from './navLink';
 import {Tabs,Button,Row,Col} from 'antd';
+import { routeCodes } from '../../routes/RootRouter';
+
 /*
  * @class Navigation `导航`组件
  */
@@ -15,24 +17,24 @@ export default class Navigation extends React.Component {
             <div>
                 <Row className="className" type="flex" align="middle" justify="space-around">
                     <Col span={6}>
-                        <NavLink to="/one-day/">
+                        <NavLink to={ routeCodes.AllMemosRoute }>
                             All&nbsp;
                             <Button shape="circle" size="small">{this.props.allMemos}</Button>
                         </NavLink>
                     </Col>
                     <Col span={6}>
-                        <NavLink to="/one-day/todo">
+                        <NavLink to={ routeCodes.TodoRoute }>
                             New Event&nbsp;<span>{this.props.todoNumber}</span>
                         </NavLink>
                     </Col>
                     <Col span={6}>
-                        <NavLink to="/one-day/doing">
+                        <NavLink to={ routeCodes.DoingRoute }>
                             In progress<span>{this.props.doingNumber}</span>
                         </NavLink>
 
                     </Col>
                     <Col span={6}>
-                        <NavLink to="/one-day/done">
+                        <NavLink to={ routeCodes.DoneRoute }>
                             Done<span>{this.props.doneNumber}</span>
                         </NavLink>
                     </Col>

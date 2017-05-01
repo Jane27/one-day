@@ -37,7 +37,7 @@ module.exports = {
         //绝对路径,用于输出到位置
         path: BUILD_PATH,
         //服务路径,用于热替换服务器
-        publicPath: '/',
+        publicPath: '/one-day/',
         //输出文件名
         filename: 'bundle.js'
     },
