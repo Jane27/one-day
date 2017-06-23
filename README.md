@@ -2,9 +2,7 @@
 
 > Architecture：react+react-router+redux+less+ES6+webpack
 
->UI is base on ：[TodoList Offical website](http://www.todolist.cn/);
-
-> Online demo：[one-day](http://damonare.cn/memos);
+> Online demo：[one-day](https://jane27.github.io/one-day/);
 
 ### setup
 
